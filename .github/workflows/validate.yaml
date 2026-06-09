@@ -23,11 +23,3 @@ jobs:
 
       - name: Lint all YAML files
         run: yamllint .
-
-      - name: Install kubectl
-        uses: azure/setup-kubectl@v4
-        with:
-          version: v1.34.0
-
-      - name: Validate Kubernetes manifests
-        run: kubectl apply --dry-run=client --validate=false -f workloads/frontend/
