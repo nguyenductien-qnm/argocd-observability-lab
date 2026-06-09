@@ -12,3 +12,13 @@ Mac browser localhost:8080
 5. lấy pass argocd
 - kubectl get secret argocd-initial-admin-secret -n argocd -o yaml
 - echo <PASSS> | base64 -d
+
+ArgoCD UI
+  -> argocd-server
+  -> argocd-repo-server
+  -> DNS
+  -> Internet access
+  -> GitHub
+  -> SSH trust
+  -> SSH auth
+  -> Private repo
