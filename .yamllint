@@ -4,3 +4,4 @@ rules:
   document-start: disable
   line-length: disable
   truthy: disable
+  new-line-at-end-of-file: disable
