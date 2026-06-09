@@ -1,8 +1,5 @@
-grafana:
+alertmanager:
   enabled: false
 
-prometheusOperator:
-  admissionWebhooks:
-    enabled: false
-    patch:
-      enabled: false
+pushgateway:
+  enabled: false
