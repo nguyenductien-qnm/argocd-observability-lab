@@ -1,5 +1,46 @@
 alertmanager:
-  enabled: false
+  enabled: true
 
 pushgateway:
   enabled: false
+
+serverFiles:
+  alerting_rules.yml:
+    groups:
+      - name: api-alerts
+        rules:
+          - alert: ApiHighErrorRate
+            expr: |
+              (
+                sum(rate(w9_api_http_requests_total{route="/api/overview",status_code=~"5.."}[2m]))
+                /
+                clamp_min(
+                  sum(rate(w9_api_http_requests_total{route="/api/overview"}[2m])),
+                  1
+                )
+              ) > 0.05
+            for: 30s
+            labels:
+              severity: warning
+            annotations:
+              summary: "API error rate is high"
+              description: "/api/overview error rate is above 5% for 2 minutes."
+
+alertmanagerFiles:
+  alertmanager.yml:
+    global:
+      smtp_smarthost: smtp.gmail.com:587
+      smtp_from: ndtien317@gmail.com
+      smtp_auth_username: ndtien317@gmail.com
+      smtp_auth_password: ovncqeglmorzwgoz
+      smtp_require_tls: true
+    route:
+      receiver: personal-email
+      group_wait: 10s
+      group_interval: 30s
+      repeat_interval: 1h
+    receivers:
+      - name: personal-email
+        email_configs:
+          - to: nguyenductien.qnm@gmail.com
+            send_resolved: true
