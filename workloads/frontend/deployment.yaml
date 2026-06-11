@@ -15,8 +15,10 @@ spec:
       labels:
         app: frontend
     spec:
+      imagePullSecrets:
+        - name: ecr-registry
       containers:
         - name: frontend
-          image: nginx:stable
+          image: 730335441285.dkr.ecr.ap-southeast-1.amazonaws.com/web-w9:sha-3de1d6a4883e3b2f7b6338cfd6faf06643676cdb
           ports:
             - containerPort: 80
