@@ -22,7 +22,7 @@ spec:
           image: 730335441285.dkr.ecr.ap-southeast-1.amazonaws.com/w9-api-image:sha-7a38be4132f59b4cd7d8f92a19d4684ab81b9a8f
           env:
             - name: VERSION
-              value: "v2"
+              value: "v3"
             - name: ERROR_RATE
               value: "0"
           readinessProbe:
