@@ -1,12 +1,12 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: frontend
   namespace: frontend
   labels:
     app: frontend
 spec:
-  replicas: 2
+  replicas: 4
   selector:
     matchLabels:
       app: frontend
@@ -19,6 +19,12 @@ spec:
         - name: ecr-registry
       containers:
         - name: frontend
-          image: 730335441285.dkr.ecr.ap-southeast-1.amazonaws.com/w9-image:sha-b3a1141334849810ef6167314fe0b04f24f3133a
+          image: 730335441285.dkr.ecr.ap-southeast-1.amazonaws.com/w9-image:sha-ac5a82647b8acf9d39c2fd96d5e8c16eb733c02c
           ports:
             - containerPort: 80
+  strategy:
+    canary:
+      steps:
+        - setWeight: 50
+        - pause: {}
+        - setWeight: 100
