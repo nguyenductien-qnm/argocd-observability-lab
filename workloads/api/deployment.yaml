@@ -1,12 +1,12 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
-  name: api-deployment
+  name: api
   namespace: api
   labels:
     app: api
 spec:
-  replicas: 2
+  replicas: 4
   selector:
     matchLabels:
       app: api
@@ -19,6 +19,39 @@ spec:
         - name: ecr-registry
       containers:
         - name: api
-          image: 730335441285.dkr.ecr.ap-southeast-1.amazonaws.com/w9-api-image:sha-93efcb0d0c6a86f1fe297333e7b00fa9f0c650fb
+          image: 730335441285.dkr.ecr.ap-southeast-1.amazonaws.com/w9-api-image:sha-7a38be4132f59b4cd7d8f92a19d4684ab81b9a8f
+          env:
+            - name: VERSION
+              value: "v1"
+            - name: ERROR_RATE
+              value: "0"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 15
           ports:
             - containerPort: 3000
+  strategy:
+    canary:
+      steps:
+        - setWeight: 25
+        - pause:
+            duration: 30s
+        - analysis:
+            templates:
+              - templateName: api-error-rate
+        - setWeight: 50
+        - pause:
+            duration: 30s
+        - analysis:
+            templates:
+              - templateName: api-error-rate
+        - setWeight: 100

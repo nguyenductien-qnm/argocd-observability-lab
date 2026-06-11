@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: api-error-rate
+  namespace: api
+spec:
+  metrics:
+    - name: api-error-rate
+      interval: 15s
+      count: 4
+      failureLimit: 1
+      successCondition: result[0] <= 0.05
+      provider:
+        prometheus:
+          address: http://prometheus-server.monitoring.svc.cluster.local
+          query: |
+            sum(
+              rate(w9_api_http_requests_total{route="/api/overview",status_code=~"5.."}[2m])
+            )
+            /
+            clamp_min(
+              sum(rate(w9_api_http_requests_total{route="/api/overview"}[2m])),
+              1
+            )
