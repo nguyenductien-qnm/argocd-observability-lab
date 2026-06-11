@@ -6,6 +6,9 @@
 errorDnS: kubectl -n kube-system get configmap coredns -o yaml
 forward . /etc/res olv.conf -> forward . 1.1.1.1 8.8.8.8
 
+kubectl port-forward svc/frontend -n frontend 1111:80
+vagrant ssh master -- -L 1111:127.0.0.1:1111
+
 ==================================================================
 
 kubectl edit cm coredns -n kube-system
