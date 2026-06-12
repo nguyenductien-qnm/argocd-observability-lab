@@ -9,7 +9,7 @@ spec:
       interval: 15s
       count: 4
       failureLimit: 1
-      successCondition: len(result) == 0 || result[0] <= 0.05
+      successCondition: len(result) > 0 && result[0] <= 0.05
       provider:
         prometheus:
           address: http://prometheus-server.monitoring.svc.cluster.local
