@@ -1,5 +1,22 @@
 alertmanager:
   enabled: true
+  config:
+    global:
+      smtp_smarthost: smtp.gmail.com:587
+      smtp_from: ndtien317@gmail.com
+      smtp_auth_username: ndtien317@gmail.com
+      smtp_auth_password: ovncqeglmorzwgoz
+      smtp_require_tls: true
+    route:
+      receiver: personal-email
+      group_wait: 10s
+      group_interval: 30s
+      repeat_interval: 1h
+    receivers:
+      - name: personal-email
+        email_configs:
+          - to: nguyenductien.qnm@gmail.com
+            send_resolved: true
 
 pushgateway:
   enabled: false
@@ -25,22 +42,3 @@ serverFiles:
             annotations:
               summary: "API error rate is high"
               description: "/api/overview error rate is above 5% for 2 minutes."
-
-alertmanagerFiles:
-  alertmanager.yml:
-    global:
-      smtp_smarthost: smtp.gmail.com:587
-      smtp_from: ndtien317@gmail.com
-      smtp_auth_username: ndtien317@gmail.com
-      smtp_auth_password: ovncqeglmorzwgoz
-      smtp_require_tls: true
-    route:
-      receiver: personal-email
-      group_wait: 10s
-      group_interval: 30s
-      repeat_interval: 1h
-    receivers:
-      - name: personal-email
-        email_configs:
-          - to: nguyenductien.qnm@gmail.com
-            send_resolved: true
