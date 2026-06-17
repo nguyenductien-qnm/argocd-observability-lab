@@ -13,3 +13,7 @@ kubectl create secret docker-registry ecr-registry \
 ssh-keygen -t ed25519 -C "argocd-github" -f ~/.ssh/argocd_ed25519 -N ""
 
 pass argocd: -RYAC14aGCUe9nUk
+
+kubectl delete secret ecr-registry -n frontend
+
+while true; do curl -s -o /dev/null -w "Frontend HTTP Status: %{http_code}\n" http://localhost/; sleep 0.1; done

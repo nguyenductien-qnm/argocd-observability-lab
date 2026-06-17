@@ -19,7 +19,7 @@ spec:
         - name: ecr-registry
       containers:
         - name: api
-          image: 730335441285.dkr.ecr.ap-southeast-1.amazonaws.com/w9-api-image:sha-fbbe1379dc2ee051aefcee4bd8efbf1f813b9988
+          image: 730335441285.dkr.ecr.ap-southeast-1.amazonaws.com/w9-api-image:sha-4f9fe0c3ccd08517fdf1a3f17c8d787b499ceec7
           env:
             - name: VERSION
               value: "v12"
