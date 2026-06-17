@@ -16,4 +16,6 @@ pass argocd: -RYAC14aGCUe9nUk
 
 kubectl delete secret ecr-registry -n frontend
 
-while true; do curl -s -o /dev/null -w "Frontend HTTP Status: %{http_code}\n" http://localhost/; sleep 0.1; done
+while true; do curl -s -o /dev/null -w "Frontend HTTP Status: %{http_code}\n" http://localhost/; sleep 1; done
+
+kubectl patch app root-app -n argocd --type merge -p '{"metadata":{"annotations":{"argocd.argoproj.io/refresh":"hard"}}}'

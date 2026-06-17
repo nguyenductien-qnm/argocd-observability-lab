@@ -19,12 +19,16 @@ spec:
         - name: ecr-registry
       containers:
         - name: api
-          image: 730335441285.dkr.ecr.ap-southeast-1.amazonaws.com/w9-api-image:sha-4f9fe0c3ccd08517fdf1a3f17c8d787b499ceec7
+          image: 730335441285.dkr.ecr.ap-southeast-1.amazonaws.com/w9-api-image:sha-ce0474db8901d7546d8150c9c3aabe180c3f3bad
           env:
             - name: VERSION
               value: "v12"
             - name: ERROR_RATE
               value: "0"
+          volumeMounts:
+            - name: secret-volume
+              mountPath: /etc/secrets
+              readOnly: true
           readinessProbe:
             httpGet:
               path: /health
@@ -39,6 +43,10 @@ spec:
             periodSeconds: 15
           ports:
             - containerPort: 3000
+      volumes:
+        - name: secret-volume
+          secret:
+            secretName: api-secret
   strategy:
     canary:
       steps:
