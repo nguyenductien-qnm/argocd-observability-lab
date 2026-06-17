@@ -1,0 +1,22 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: verify-image-signature
+spec:
+  validationFailureAction: Enforce
+  background: false
+  rules:
+    - name: verify-signature
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      verifyImages:
+        - imageReferences:
+            - "730335441285.dkr.ecr.ap-southeast-1.amazonaws.com/*"
+          key: |-
+            -----BEGIN PUBLIC KEY-----
+            MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEU//jffVJhHPs9PKS+/Gw4umbOauc
+            adrEEQhadZSCLMLrY8ssFo0qyuhCTW5PWl60t/nBJNzBnMzQhYeIn5lXbw==
+            -----END PUBLIC KEY-----
