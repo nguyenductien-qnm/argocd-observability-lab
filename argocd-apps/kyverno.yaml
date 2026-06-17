@@ -25,6 +25,8 @@ spec:
         parameters:
           - name: admissionController.replicas
             value: "1"
+          - name: crds.install
+            value: "true"
     - repoURL: git@github.com:nguyenductien-qnm/argocd-observability-lab.git
       targetRevision: main
       path: kyverno
