@@ -19,7 +19,7 @@ spec:
         - name: ecr-registry
       containers:
         - name: frontend
-          image: 730335441285.dkr.ecr.ap-southeast-1.amazonaws.com/w9-image:sha-5f1eaf73ece4e28750ac135067c233e198fea7de
+          image: 730335441285.dkr.ecr.ap-southeast-1.amazonaws.com/w9-image:sha-68c53eccc2d2de73b361f51bd9bdd45957da8d8c
           ports:
             - containerPort: 80
   strategy:
